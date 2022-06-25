@@ -10,6 +10,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float crashVolume = 0.2f;
     [SerializeField] AudioClip finish;
     [SerializeField] float finishVolume = 0.3f;
+    [SerializeField] ParticleSystem crashParticles;
+    [SerializeField] ParticleSystem finishParticles;
 
     AudioSource audsrc;
 
@@ -19,13 +21,13 @@ public class CollisionHandler : MonoBehaviour
     // called zero
     void Awake()
     {
-        Debug.Log("Awake");
+        //Debug.Log("Awake");
     }
 
     // called first
     void OnEnable()
     {
-        Debug.Log("OnEnable called");
+        //Debug.Log("OnEnable called");
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -33,25 +35,28 @@ public class CollisionHandler : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         audsrc = GetComponent<AudioSource>();
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        Debug.Log(mode);
+        //Debug.Log(this.name);
+        //Debug.Log("OnSceneLoaded: " + scene.name);
+        //Debug.Log(mode);
     }
 
     // called third
     void Start()
     {
-        Debug.Log("Start");
+        //Debug.Log("Start");
     }
 
     // called when the game is terminated
     void OnDisable()
     {
-        Debug.Log("OnDisable");
+        //Debug.Log("OnDisable");
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("this: "+this.name);
+        Debug.Log("other: "+other.gameObject.name);
         switch (other.gameObject.tag)
         {
             case "Untagged":
@@ -67,24 +72,28 @@ public class CollisionHandler : MonoBehaviour
                 }
                 break;
             default:
-                Debug.Log("Default");
                 break;
         }
     }
 
     private void startCrashSequence()
     {
-        GetComponent<movement>().enabled = false;
+        //audsrc = GetComponent<AudioSource>();
+        GetComponent<RocketMovement>().enabled = false;
         audsrc.Stop();
         audsrc.PlayOneShot(crash,crashVolume);
+        Debug.Log(crashParticles);
+        crashParticles.Play();
         Invoke("reloadLevel",delay);
     }
 
     private void finishLevel()
     {
-        GetComponent<movement>().enabled = false;
+        //audsrc = GetComponent<AudioSource>();
+        GetComponent<RocketMovement>().enabled = false;
         audsrc.Stop();
-        GetComponent<AudioSource>().PlayOneShot(finish,finishVolume);
+        audsrc.PlayOneShot(finish,finishVolume);
+        finishParticles.Play();
         Invoke("loadNextLevel",delay);
     }
     
