@@ -55,8 +55,8 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("this: "+this.name);
-        Debug.Log("other: "+other.gameObject.name);
+        //Debug.Log("this: "+this.name);
+        //Debug.Log("other: "+other.gameObject.name);
         switch (other.gameObject.tag)
         {
             case "Untagged":
@@ -82,7 +82,7 @@ public class CollisionHandler : MonoBehaviour
         GetComponent<RocketMovement>().enabled = false;
         audsrc.Stop();
         audsrc.PlayOneShot(crash,crashVolume);
-        Debug.Log(crashParticles);
+        //Debug.Log(crashParticles);
         crashParticles.Play();
         Invoke("reloadLevel",delay);
     }
@@ -104,7 +104,8 @@ public class CollisionHandler : MonoBehaviour
 
     private void loadNextLevel()
     {
-        if(SceneManager.GetActiveScene().buildIndex+1 == SceneManager.sceneCountInBuildSettings){
+        if(SceneManager.GetActiveScene().buildIndex+1 == SceneManager.sceneCountInBuildSettings)
+        {
             Debug.Log("GG!");
             SceneManager.LoadScene(0);
             return;

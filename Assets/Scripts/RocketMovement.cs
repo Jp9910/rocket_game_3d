@@ -31,14 +31,27 @@ public class RocketMovement : MonoBehaviour
 
     void ProcessThrust()
     {
-        if(Input.GetKey(KeyCode.Space)){
-            boosterParticles.Play();
-            rb.AddRelativeForce(new Vector3(0,1,0)*movementSpeed*deltaTime); //new Vector3(0,1,0)
-            if(!audiosrc.isPlaying)
-                audiosrc.PlayOneShot(engineSound,engineSoundVolume);
+        if(Input.GetKey(KeyCode.Space))
+        {
+            startThursting();
         }
         else
-            audiosrc.Stop();
+        {
+            stopThrusting();
+        }
+    }
+
+    private void startThursting()
+    {
+        boosterParticles.Play();
+        rb.AddRelativeForce(new Vector3(0, 1, 0) * movementSpeed * deltaTime); //new Vector3(0,1,0)
+        if (!audiosrc.isPlaying)
+            audiosrc.PlayOneShot(engineSound, engineSoundVolume);
+    }
+
+    private void stopThrusting()
+    {
+        audiosrc.Stop();
     }
 
     void ProcessRotation()
